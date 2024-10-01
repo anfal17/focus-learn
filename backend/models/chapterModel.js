@@ -48,3 +48,29 @@ async function updateChapter(id, data) {
 
 //only return  if upate successfull
 
+async function updateChapterComplete(id, data) {
+    const { is_completed } = data; // Destructure data
+    const result = await db.query(
+        'UPDATE chapters SET is_completed = ? WHERE id = ?',
+        [is_completed, id]
+    );
+    return result.affectedRows > 0; // Return true if the update was successful
+}
+
+// Delete a chapter by ID
+async function deleteChapter(id) {
+    const result = await db.query(
+        'DELETE FROM chapters WHERE id = ?',
+        [id]
+    );
+    return result.affectedRows > 0; // Return true if the deletion was successful
+}
+
+module.exports = {
+    createChapter,
+    getChaptersByJourneyId,
+    getChapterById,
+    updateChapter,
+    updateChapterComplete,
+    deleteChapter,
+};
