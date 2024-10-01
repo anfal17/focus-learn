@@ -16,3 +16,25 @@ exports.createChapter = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+// Get all chapters for a specific journey
+exports.getChaptersByJourneyId = async (req, res) => {
+    try {
+        const chapters = await Chapter.getChaptersByJourneyId(req.params.journeyId);
+        res.json(chapters);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.getChapterById = async (req, res) => {
+    try {
+        const chapter = await Chapter.getChapterById(req.params.id);
+        if (!chapter) {
+            return res.status(404).json({ message: 'Chapter not found' });
+        }
+        res.json(chapter);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

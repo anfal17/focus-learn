@@ -18,3 +18,21 @@ async function createChapter(data) {
     return result.insertId; // Return the ID of the newly created chapter
 }
 
+// Get chapters by journey ID
+async function getChaptersByJourneyId(journeyId) {
+    const result = await db.query(
+        'SELECT * FROM chapters WHERE journey_id = ? ORDER BY chapter_no',
+        [journeyId]
+    );
+    return result; // Return an array of chapters for the journey
+}
+
+// Get a chapter by ID
+async function getChapterById(id) {
+    const result = await db.query(
+        'SELECT * FROM chapters WHERE id = ?',
+        [id]
+    );
+    return result[0]; // Return the chapter object if found
+}
+
