@@ -30,7 +30,15 @@ async function findUserById(id) {
     return result[0]; // Return the user object if found
 }
 
+//to get the -- > users
 async function findAllUsers() {
     const result = await db.query('SELECT * FROM users');
     return result; // Return an array of all users
 }
+
+module.exports = {
+    createUser,
+    findUserByEmail,
+    findUserById,
+    findAllUsers,
+};
