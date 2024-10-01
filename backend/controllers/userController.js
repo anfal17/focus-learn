@@ -62,6 +62,8 @@ exports.loginUser = async (req, res) => {
 
 exports.getUserProfile = async (req, res) => {
     try {
+
+        //check here finding problems
         const user = await User.findUserById(req.user.id);
         // console.log(user);
         
