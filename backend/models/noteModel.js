@@ -1,4 +1,4 @@
-
+const db = require('../dbConnec'); // Import database connection
 // Create a new note
 exports.createNote = async (data) => {
     const [result] = await db.execute(
