@@ -19,3 +19,18 @@ async function findUserByEmail(email) {
     );
     return result[0]; // Return the first matching user
 }
+
+
+// Find a user by ID -- used in getuserprofile
+async function findUserById(id) {
+    const result = await db.query(
+        'SELECT * FROM users WHERE id = ?',
+        [id]
+    );
+    return result[0]; // Return the user object if found
+}
+
+async function findAllUsers() {
+    const result = await db.query('SELECT * FROM users');
+    return result; // Return an array of all users
+}
