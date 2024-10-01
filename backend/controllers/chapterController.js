@@ -38,3 +38,49 @@ exports.getChapterById = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+exports.updateChapter = async (req, res) => {
+    try {
+        const updated = await Chapter.updateChapter(req.params.id, {
+            title: req.body.title,
+            description: req.body.description,
+            video_link: req.body.video_link,
+            external_link: req.body.external_link,
+            chapter_no: req.body.chapter_no
+        });
+        if (!updated) {
+            return res.status(404).json({ message: 'Chapter not found' });
+        }
+        res.json({ message: 'Chapter updated successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+//to mark a cahpter complete
+exports.updateChapterCompleted = async (req, res) => {
+    try {
+        const updated = await Chapter.updateChapterComplete(req.params.id, {
+            is_completed: req.body.is_completed,
+            
+        });
+        if (!updated) {
+            return res.status(404).json({ message: 'Chapter not found' });
+        }
+        res.json({ message: 'Chapter updated successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.deleteChapter = async (req, res) => {
+    try {
+        const deleted = await Chapter.deleteChapter(req.params.id);
+        if (!deleted) {
+            return res.status(404).json({ message: 'Chapter not found' });
+        }
+        res.json({ message: 'Chapter deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

@@ -36,3 +36,15 @@ async function getChapterById(id) {
     return result[0]; // Return the chapter object if found
 }
 
+// Update a chapter by ID
+async function updateChapter(id, data) {
+    const { title, description, video_link, chapter_no } = data; // Destructure data
+    const result = await db.query(
+        'UPDATE chapters SET title = ?, description = ?, video_link = ?, chapter_no = ? WHERE id = ?',
+        [title, description, video_link, chapter_no, id]
+    );
+    return result.affectedRows > 0; // Return true if the update was successful
+}
+
+//only return  if upate successfull
+
