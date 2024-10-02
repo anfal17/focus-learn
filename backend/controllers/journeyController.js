@@ -1,5 +1,5 @@
 const Journey = require('../models/journeyModel');
-const Chapter = require('../models/chapterModels');
+const Chapter = require('../models/chapterModel');
 
 //---added later on ----first basic to ajust create custom journeys
 const { getPlaylistDetails, getPlaylistVideos } = require('./playlistJourney');

@@ -13,7 +13,7 @@ const {
     createJourneyFromPlaylist,
     getPublicJourneys
 
-} = require('../controllers/journeys');
+} = require('../controllers/journeyController');
 
 
 

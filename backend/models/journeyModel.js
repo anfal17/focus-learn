@@ -1,4 +1,4 @@
-const db = require("../database"); // Import database connection
+const db = require("../dbConnec"); // Import database connection
 
 // Create a new journey
 exports.createJourney = async (data) => {
