@@ -1,76 +1,46 @@
-const db = require('../dbConnec')
+const db = require('../dbConnec');
 
-//things to do
 
-//createChapter
-//getChapterbyId --> to find details of each chapter
-//getChapter
-//updateCahpter
-//updateCahpterComplete
-//deleteChapter
+exports.createChapter = async (data) => {
 
-async function createChapter(data) {
-    const { title, description, video_link, chapter_no, journey_id } = data; // Destructure data
-    const result = await db.query(
+    const [result] = await db.execute(
         'INSERT INTO chapters (title, description, video_link, chapter_no, journey_id) VALUES (?, ?, ?, ?, ?)',
-        [title, description, video_link, chapter_no, journey_id]
+        [data.title, data.description, data.video_link, data.chapter_no, data.journey_id]
     );
-    return result.insertId; // Return the ID of the newly created chapter
-}
+    return result.insertId;
+};
 
-// Get chapters by journey ID
-async function getChaptersByJourneyId(journeyId) {
-    const result = await db.query(
-        'SELECT * FROM chapters WHERE journey_id = ? ORDER BY chapter_no',
-        [journeyId]
-    );
-    return result; // Return an array of chapters for the journey
-}
 
-// Get a chapter by ID
-async function getChapterById(id) {
-    const result = await db.query(
-        'SELECT * FROM chapters WHERE id = ?',
-        [id]
-    );
-    return result[0]; // Return the chapter object if found
-}
+exports.getChaptersByJourneyId = async (journeyId) => {
+    const [rows] = await db.execute('SELECT * FROM chapters WHERE journey_id = ? ORDER BY chapter_no ASC', [journeyId]);
+    return rows;
+};
 
-// Update a chapter by ID
-async function updateChapter(id, data) {
-    const { title, description, video_link, chapter_no } = data; // Destructure data
-    const result = await db.query(
+
+exports.getChapterById = async (id) => {
+    const [rows] = await db.execute('SELECT * FROM chapters WHERE id = ?', [id]);
+    return rows[0];
+};
+
+
+exports.updateChapter = async (id, data) => {
+    const [result] = await db.execute(
         'UPDATE chapters SET title = ?, description = ?, video_link = ?, chapter_no = ? WHERE id = ?',
-        [title, description, video_link, chapter_no, id]
+        [data.title, data.description, data.video_link,  data.chapter_no, id]
     );
-    return result.affectedRows > 0; // Return true if the update was successful
-}
+    return result.affectedRows > 0;
+};
 
-//only return  if upate successfull
-
-async function updateChapterComplete(id, data) {
-    const { is_completed } = data; // Destructure data
-    const result = await db.query(
+exports.updateChapterComplete = async (id, data) => {
+    const [result] = await db.execute(
         'UPDATE chapters SET is_completed = ? WHERE id = ?',
-        [is_completed, id]
+        [data.is_completed, id]
     );
-    return result.affectedRows > 0; // Return true if the update was successful
-}
+    return result.affectedRows > 0;
+};
 
-// Delete a chapter by ID
-async function deleteChapter(id) {
-    const result = await db.query(
-        'DELETE FROM chapters WHERE id = ?',
-        [id]
-    );
-    return result.affectedRows > 0; // Return true if the deletion was successful
-}
 
-module.exports = {
-    createChapter,
-    getChaptersByJourneyId,
-    getChapterById,
-    updateChapter,
-    updateChapterComplete,
-    deleteChapter,
+exports.deleteChapter = async (id) => {
+    const [result] = await db.execute('DELETE FROM chapters WHERE id = ?', [id]);
+    return result.affectedRows > 0;
 };
